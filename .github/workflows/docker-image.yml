@@ -1,18 +1,9 @@
-name: Docker Image CI
+version: '3.9'
 
-on:
-  push:
-    branches: [ "password_generator" ]
-  pull_request:
-    branches: [ "password_generator" ]
-
-jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+services:
+  password-generator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true # Открываем стандартный ввод для взаимодействия
+    tty: true        # Включаем режим псевдотерминала
